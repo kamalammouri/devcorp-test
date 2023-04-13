@@ -1,0 +1,4 @@
+<p>users-list works!</p>
+<ng-container *ngIf="(usersList$ | async | json) as usersList">
+  <pre>{{usersList}}</pre>
+</ng-container>
