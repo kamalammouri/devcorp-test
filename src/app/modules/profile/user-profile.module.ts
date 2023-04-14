@@ -5,13 +5,15 @@ import { UserRepositoryComponent } from './components/user-repository/user-repos
 import { RouterModule } from '@angular/router';
 import { userRoutes } from './user-profile.routes';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { UserRepositoryStateComponent } from './components/user-repository-state/user-repository-state.component';
 
 
 @NgModule({
   declarations: [
     UserProfileComponent,
     UserFollowersComponent,
-    UserRepositoryComponent
+    UserRepositoryComponent,
+    UserRepositoryStateComponent
   ],
   imports: [
     RouterModule.forChild(userRoutes),
