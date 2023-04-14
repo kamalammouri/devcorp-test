@@ -1,1 +1,7 @@
-<p>user-repository-state works!</p>
+<div>stateRepos</div>
+<ng-container *ngIf="stateRepos$ | async as stateRepos">
+  <div class="container">
+    <h1>Statistics</h1>
+    <pre>{{stateRepos | json}}</pre>
+</div>
+</ng-container>

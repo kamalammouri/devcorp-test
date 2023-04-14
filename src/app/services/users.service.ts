@@ -28,7 +28,7 @@ export class UsersService {
     return this.http.get<Ifollower[]>(`${this.apiUrl}/users/${login}/followers`);
   }
 
-  getStateRepo(login: string, repoName: string) : Observable<IstateRepo> {
+  getStateRepo(login: string | undefined, repoName: string) : Observable<IstateRepo> {
     return this.http.get<IstateRepo>(`${this.apiUrl}/repos/${login}/${repoName}`);
   }
 }

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, distinctUntilChanged, filter, map, tap } from 'rxjs';
 import { Irepo } from 'src/app/models/repo.model';
@@ -21,16 +21,22 @@ export class UserRepositoryComponent {
   repos$!: Observable<Irepo[] | undefined>;
   isLoading$!: Observable<boolean | undefined>;
   error$!: Observable<HttpErrorResponse | undefined>;
+  login:string|undefined;
   constructor(
     private store: Store<RepoState>,
-    private userService: UsersService
+    private userService: UsersService,
+    private router: Router
   ) {
-    this.userService.login$.subscribe((login: any) => this.store.dispatch(fetchRepoStart({ login: login })))
+    this.userService.login$.pipe(tap(login => this.login = login)).subscribe((login: any) => this.store.dispatch(fetchRepoStart({ login: login })))
   }
 
   ngOnInit() {
     this.repos$ = this.store.select(selectRepos);
     this.isLoading$ = this.store.select(isLoading);
     this.error$ = this.store.select(error);
+  }
+
+  navigatTo(repo:string){
+    return this.router.navigate(['profile',this.login,repo]);
   }
 }

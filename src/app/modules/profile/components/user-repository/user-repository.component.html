@@ -1,7 +1,7 @@
 <ng-container *ngIf="repos$ | async as repos">
   <div class="container">
     <h1>Repositories</h1>
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Name</th>
@@ -11,7 +11,7 @@
         </thead>
         <tbody id="repo-list">
           <ng-container *ngFor="let repo of repos">
-            <tr>
+            <tr style="cursor : pointer" (click)="navigatTo(repo.name)">
               <th>{{repo.name}}</th>
               <th>{{repo.description}}</th>
               <th>{{repo.stargazers_count}}</th>
