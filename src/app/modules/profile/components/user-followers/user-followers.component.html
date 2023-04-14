@@ -1,1 +1,19 @@
-<p>user-followers works!</p>
+<ng-container *ngIf="followers$ | async as followers">
+  <div class="container">
+    <h2>Followers</h2>
+    <ul class="list-group">
+      <ng-container *ngFor="let follow of followers">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-2">
+              <img [src]="follow.avatar_url" alt="User Avatar" class="img-thumbnail">
+            </div>
+            <div class="col-md-10">
+              <h5>{{follow.login}}</h5>
+            </div>
+          </div>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</ng-container>

@@ -14,27 +14,22 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(usersAction.fetshUsersStart, (state) => {
-    return {
-      ...state,
-      isLoading: true,
-      error: undefined,
-    };
-  }),
-  on(usersAction.fetshUsersError, (state, { error }) => {
-    return {
-      ...state,
-      isLoading: false,
-      error: error,
-    };
-  }),
-  on(usersAction.fetshUsersSuccess, (state) => {
-    return {
-      ...state,
-      isLoading: false,
-      error: undefined,
-    };
-  })
+  on(usersAction.fetchUsersStart, (state) => ({
+    ...state,
+    isLoading: true,
+    error: undefined,
+  }
+  )),
+  on(usersAction.fetchUsersSuccess, (state) => ({
+    ...state,
+    isLoading: false,
+    error: undefined,
+  })),
+  on(usersAction.fetchUsersError, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error: error,
+  })),
 );
 
 export const isLoading = (state:State) => state.isLoading;

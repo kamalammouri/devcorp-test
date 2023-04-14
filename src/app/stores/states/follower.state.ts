@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Iuser } from "../models/user.model";
+import { Ifollower } from "src/app/models/follower.model";
 
-export interface UsersState {
-  response: Iuser[] | undefined;
+export interface FollowerState {
+  response: Ifollower[] | undefined
   isLoading: boolean | undefined;
   error: HttpErrorResponse | undefined;
 }

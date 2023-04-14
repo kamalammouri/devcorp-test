@@ -5,9 +5,9 @@ import { UsersListComponent } from './components/users-list/users-list.component
 import { HomeComponent } from './components/home/home.component';
 import { layoutRoutes } from './layout.routes';
 import { StoreModule } from '@ngrx/store';
-import { reducers } from 'src/app/reducers';
+import { reducers } from 'src/app/stores/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { UsersEffects } from 'src/app/effects/users.effects';
+import { UsersEffects } from 'src/app/stores/effects/users.effects';
 
 
 @NgModule({

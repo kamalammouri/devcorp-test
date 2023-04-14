@@ -11,8 +11,7 @@ const featureSelector = createFeatureSelector<UserState>('user');
 const userSelector = createSelector(featureSelector, (x) => x.user);
 const apiSelector = createSelector(featureSelector, (x) => x.api);
 
-const { selectAll, selectEntities, selectIds, selectTotal } =
-  fromUser.adapter.getSelectors(userSelector);
+const { selectAll, selectEntities, selectIds, selectTotal } = fromUser.adapter.getSelectors(userSelector);
 
 export const userEntities = selectAll;
 

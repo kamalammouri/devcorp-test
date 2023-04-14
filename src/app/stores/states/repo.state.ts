@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Iprofile } from "../models/profile.model";
+import { Irepo } from "src/app/models/repo.model";
 
-export interface ProfileState {
-  response: Iprofile | undefined;
+export interface RepoState {
+  response: Irepo[] | undefined
   isLoading: boolean | undefined;
   error: HttpErrorResponse | undefined;
 }

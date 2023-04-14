@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { UserState, getApiError, getIsLoading, userEntities } from 'src/app/reducers';
-import * as usersActions from '../../../../actions/users.actions'
+import { UserState, getApiError, getIsLoading, userEntities } from 'src/app/stores/reducers';
+import * as usersActions from '../../../../stores/actions/users.actions'
 import { Iuser } from 'src/app/models/user.model';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,7 +18,7 @@ export class UsersListComponent implements OnInit{
   apiError$!: Observable<HttpErrorResponse | undefined>;
 
   constructor(private store:Store<UserState>){
-    this.store.dispatch(usersActions.fetshUsersStart())
+    this.store.dispatch(usersActions.fetchUsersStart())
     this.entities$ = this.store.pipe(select(userEntities))
     this.isLoading$ = this.store.pipe(select(getIsLoading))
     this.apiError$ = this.store.pipe(select(getApiError))
