@@ -1,4 +1,4 @@
-export interface profile {
+export interface Iprofile {
   login: string
   id: number
   node_id: string

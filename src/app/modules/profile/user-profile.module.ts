@@ -6,6 +6,10 @@ import { UserRepositoryComponent } from './components/user-repository/user-repos
 import { RouterModule } from '@angular/router';
 import { userRoutes } from './user-profile.routes';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { profileReducer } from 'src/app/reducers/profile.reducer';
+import { ProfileEffects } from 'src/app/effects/profile.effects';
 
 
 
@@ -17,6 +21,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     UserRepositoryComponent
   ],
   imports: [
+    StoreModule.forFeature('profile', profileReducer),
+    EffectsModule.forFeature([ProfileEffects]),
     RouterModule.forChild(userRoutes),
     CommonModule
   ]

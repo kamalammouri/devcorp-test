@@ -4,7 +4,10 @@ import { RouterModule } from '@angular/router';
 import { UsersListComponent } from './components/users-list/users-list.component';
 import { HomeComponent } from './components/home/home.component';
 import { layoutRoutes } from './layout.routes';
-
+import { StoreModule } from '@ngrx/store';
+import { reducers } from 'src/app/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { UsersEffects } from 'src/app/effects/users.effects';
 
 
 @NgModule({
@@ -13,6 +16,8 @@ import { layoutRoutes } from './layout.routes';
     HomeComponent
   ],
   imports: [
+    StoreModule.forFeature('user', reducers),
+    EffectsModule.forFeature([UsersEffects]),
     RouterModule.forChild(layoutRoutes),
     CommonModule
   ]

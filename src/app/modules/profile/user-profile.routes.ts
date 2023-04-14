@@ -6,7 +6,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 
 export const userRoutes: Routes = [
   {
-    path: '',
+    path: ':login',
     component: UserProfileComponent,
     children: [
       {

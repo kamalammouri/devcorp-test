@@ -1,4 +1,4 @@
-export interface user {
+export interface Iuser {
   login: string
   id: number
   node_id: string
