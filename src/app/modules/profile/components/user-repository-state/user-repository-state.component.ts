@@ -21,7 +21,7 @@ import {
 import { IstateRepo } from 'src/app/models/state-repo.model';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { fetchStateStart, fetchStateSuccess } from 'src/app/stores/actions/state.actions';
+import { fetchStateStart } from 'src/app/stores/actions/state.actions';
 import { error, isLoading, selectStateRepos } from 'src/app/stores/selectors/state.selector';
 @Component({
   selector: 'app-user-repository-state',

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, distinctUntilChanged, filter, map, tap } from 'rxjs';
@@ -16,7 +16,7 @@ import { RepoState } from 'src/app/stores/states/repo.state';
   templateUrl: './user-repository.component.html',
   styleUrls: ['./user-repository.component.scss']
 })
-export class UserRepositoryComponent {
+export class UserRepositoryComponent implements OnInit {
 
   repos$!: Observable<Irepo[] | undefined>;
   isLoading$!: Observable<boolean | undefined>;

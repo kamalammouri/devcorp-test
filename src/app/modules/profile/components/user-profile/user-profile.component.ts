@@ -1,6 +1,6 @@
 import { distinctUntilChanged, filter, map, tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit, OnDestroy {
   profile$!: Observable<Iprofile | undefined>;
   isLoading$!: Observable<boolean | undefined>;
   error$!: Observable<HttpErrorResponse | undefined>;
@@ -34,9 +34,14 @@ export class UserProfileComponent {
       .subscribe((login: string) => this.store.dispatch(fetchProfileStart({ login: login })));
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.profile$ = this.store.select(selectProfile);
     this.isLoading$ = this.store.select(isLoading);
     this.error$ = this.store.select(error);
   }
+
+  ngOnDestroy(): void {
+    this.userService.login$.next('')
+  }
+
 }

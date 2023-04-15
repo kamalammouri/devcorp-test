@@ -14,7 +14,7 @@ export class UsersService {
   apiUrl = 'https://api.github.com';
   login$ = new BehaviorSubject<string | undefined>(undefined);
   constructor(private http: HttpClient) { }
-  getUsers$: Observable<Iuser[]> = this.http.get<Iuser[]>(`${this.apiUrl}/users`).pipe(takeWhile(data => !!data,true),shareReplay(1))
+  getUsers$: Observable<Iuser[]> = this.http.get<Iuser[]>(`${this.apiUrl}/users`)//.pipe(takeWhile(data => !!data,true),shareReplay(1))
 
   getProfile(login:string):Observable<Iprofile> {
     return this.http.get<Iprofile>(`${this.apiUrl}/users/${login}`);

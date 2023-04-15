@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Ifollower } from 'src/app/models/follower.model';
@@ -13,7 +13,7 @@ import { FollowerState } from 'src/app/stores/states/follower.state';
   templateUrl: './user-followers.component.html',
   styleUrls: ['./user-followers.component.scss']
 })
-export class UserFollowersComponent {
+export class UserFollowersComponent implements OnInit {
 
   followers$!: Observable<Ifollower[] | undefined>;
   isLoading$!: Observable<boolean | undefined>;
