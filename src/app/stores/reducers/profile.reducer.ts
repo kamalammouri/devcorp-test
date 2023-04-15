@@ -12,7 +12,7 @@ export const initialState: ProfileState = {
 
 export const profileReducer = createReducer(
   initialState,
-  on(profileActions.fetchProfileStart, (state) => ({ ...state, isLoading: true, error: undefined })),
-  on(profileActions.fetchProfileSuccess, (state, { response }) => ({ ...state,response : response , isLoading: false , error: undefined})),
-  on(profileActions.fetchProfileError, (state, { error }) => ({ ...state, isLoading: false, error: error })),
+  on(profileActions.fetchProfileStart, (state) => ({ ...state, isLoading: true, response : undefined, error: undefined })),
+  on(profileActions.fetchProfileSuccess, (state, { response }) => ({ ...state , isLoading: false, response : response,  error: undefined})),
+  on(profileActions.fetchProfileError, (state, { error }) => ({ ...state, isLoading: false, response : undefined, error: error })),
 );

@@ -1,24 +1,30 @@
-<ng-container *ngIf="(isLoading$ | async)">
-  <pre>loading...</pre>
-</ng-container>
-<ng-container *ngIf="(error$ | async) as error">
-  <pre>{{error.message}}</pre>
+<div class="row">
+  <div class="col-lg-4 col-md-12">
+    <ng-container *ngIf="(isLoading$ | async)">
+      <pre>loading...</pre>
+    </ng-container>
+    <ng-container *ngIf="(error$ | async) as error">
+      <pre>{{error.message}}</pre>
 
-</ng-container>
-<ng-container *ngIf="profile$ | async as profile">
+    </ng-container>
+    <ng-container *ngIf="profile$ | async as profile">
 
-  <div class="card" style="width: 18rem;">
-    <img [src]="profile.avatar_url" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{profile.login}}</h5>
-      <h5 class="card-subtitle">{{profile.name}}</h5>
-      <p class="card-text">{{profile.bio}}</p>
-      <a class="card-link" [href]="profile.blog">blog</a>
-      <div class="d-flex justify-content-between">
-        <a routerLink="repository" class="btn btn-light">Repository  <span class="badge bg-primary rounded-pill">{{profile.public_repos}}</span></a>
-        <a routerLink="followers" class="btn btn-light">Followers <span class="badge bg-primary rounded-pill">{{profile.followers}}</span></a>
+      <div class="card sticky-top" style="width: 18rem;">
+        <img [src]="profile.avatar_url" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{profile.login}}</h5>
+          <h5 class="card-subtitle">{{profile.name}}</h5>
+          <p class="card-text">{{profile.bio}}</p>
+          <a class="card-link" [href]="profile.blog">blog</a>
+          <div class="d-flex justify-content-between">
+            <a routerLink="repository" class="btn btn-light">Repository  <span class="badge bg-primary rounded-pill">{{profile.public_repos}}</span></a>
+            <a routerLink="followers" class="btn btn-light">Followers <span class="badge bg-primary rounded-pill">{{profile.followers}}</span></a>
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </div>
-</ng-container>
-<router-outlet></router-outlet>
+  <div class="col">
+    <router-outlet></router-outlet>
+  </div>
+</div>

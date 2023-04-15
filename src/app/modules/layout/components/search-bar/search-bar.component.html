@@ -1,3 +1,6 @@
-<form class="d-flex" role="search">
+<form class="d-flex align-items-center" role="search">
+  <div class="col me-3">
+    <a class="badge bg-dark nav-link" routerLink="/profile/kamalammouri">my GitHub</a>
+  </div>
   <input class="form-control me-2" type="text" placeholder="Github username" aria-label="Search" [value] = "search$ | async" (input)="searchChanged(searhInput.value)" #searhInput noSpaces>
 </form>
