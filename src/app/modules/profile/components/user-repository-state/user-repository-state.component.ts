@@ -15,7 +15,9 @@ import {
   combineLatestWith,
   distinctUntilChanged,
   filter,
+  forkJoin,
   map,
+  mergeMap,
   of,
   tap,
 } from 'rxjs';
@@ -56,7 +58,7 @@ export class UserRepositoryStateComponent implements OnInit {
         this.store.dispatch(fetchStateStart({ login: login, repoName: repoName }));
       });
 
-      this.stateRepos$ = this.store.select(selectStateRepos);
+      this.stateRepos$ = this.store.select(selectStateRepos)
       this.isLoading$ = this.store.select(isLoading)
       this.error$ = this.store.select(error)
   }
