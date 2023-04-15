@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import * as moment from 'moment';
-import { Chart } from 'chart.js';
+import { Chart } from 'chart.js/auto';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Observable,
@@ -16,6 +16,7 @@ import {
   distinctUntilChanged,
   filter,
   map,
+  of,
   tap,
 } from 'rxjs';
 import { IstateRepo } from 'src/app/models/state-repo.model';
@@ -29,7 +30,7 @@ import { error, isLoading, selectStateRepos } from 'src/app/stores/selectors/sta
   styleUrls: ['./user-repository-state.component.scss'],
 })
 export class UserRepositoryStateComponent implements OnInit {
-  stateRepos$!: Observable<IstateRepo | undefined>;
+  stateRepos$!: Observable<any | undefined>;
   isLoading$!: Observable<boolean | undefined>;
   error$!: Observable<HttpErrorResponse | undefined>;
   repoName$ = this.route.params.pipe(
@@ -37,6 +38,11 @@ export class UserRepositoryStateComponent implements OnInit {
     filter((repoName) => repoName),
     distinctUntilChanged()
   );
+
+  commits = 0;
+  issues = 0;
+  pullRequests = 0;
+  @ViewChild('chart') chartRef!: ElementRef;
 
   constructor(
     private userService: UsersService,
@@ -47,11 +53,10 @@ export class UserRepositoryStateComponent implements OnInit {
     this.userService.login$
       .pipe(combineLatestWith(this.repoName$))
       .subscribe(([login, repoName]) => {
-        console.log(login, repoName)
         this.store.dispatch(fetchStateStart({ login: login, repoName: repoName }));
       });
 
-      this.stateRepos$ = this.store.select(selectStateRepos)
+      this.stateRepos$ = this.store.select(selectStateRepos);
       this.isLoading$ = this.store.select(isLoading)
       this.error$ = this.store.select(error)
   }

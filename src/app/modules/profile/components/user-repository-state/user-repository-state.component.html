@@ -1,4 +1,3 @@
-<div>stateRepos</div>
 <ng-container *ngIf="(isLoading$ | async)">
   <pre>loading...</pre>
 </ng-container>
@@ -7,7 +6,15 @@
 </ng-container>
 <ng-container *ngIf="stateRepos$ | async as stateRepos">
   <div class="container">
+    <!-- <pre>{{stateRepos | json}}</pre> -->
     <h1>Statistics</h1>
-    <pre>{{stateRepos | json}}</pre>
+    <div class="d-flex">
+      <h5>{{ stateRepos.name }}</h5>
+      <ul>
+        <li>Commits: {{ commits }}</li>
+        <li>Issues: {{ issues }}</li>
+        <li>Pull Requests: {{ pullRequests }}</li>
+      </ul>
+    </div>
 </div>
 </ng-container>

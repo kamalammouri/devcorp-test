@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, shareReplay, takeWhile } from 'rxjs';
+import { BehaviorSubject, Observable, map, shareReplay, takeWhile } from 'rxjs';
 import { Iuser } from '../models/user.model';
 import { Iprofile } from '../models/profile.model';
 import { Irepo } from '../models/repo.model';
@@ -30,5 +30,8 @@ export class UsersService {
 
   getStateRepo(login: string | undefined, repoName: string) : Observable<IstateRepo> {
     return this.http.get<IstateRepo>(`${this.apiUrl}/repos/${login}/${repoName}`);
+  }
+  getStateFromUrl(link: string) : Observable<number> {
+    return this.http.get<any[]>(`link`).pipe(map((data:any[]) => data.length));
   }
 }
