@@ -21,7 +21,8 @@ import {
 import { IstateRepo } from 'src/app/models/state-repo.model';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { fetchStateStart } from 'src/app/stores/actions/state.actions';
+import { fetchStateStart, fetchStateSuccess } from 'src/app/stores/actions/state.actions';
+import { error, isLoading, selectStateRepos } from 'src/app/stores/selectors/state.selector';
 @Component({
   selector: 'app-user-repository-state',
   templateUrl: './user-repository-state.component.html',
@@ -46,9 +47,11 @@ export class UserRepositoryStateComponent implements OnInit {
       .pipe(combineLatestWith(this.repoName$))
       .subscribe(([login, repoName]) => {
         console.log(login, repoName)
-        this.store.dispatch(
-          fetchStateStart({ login: login, repoName: repoName })
-        );
+        this.store.dispatch(fetchStateStart({ login: login, repoName: repoName }));
       });
+
+      this.stateRepos$ = this.store.select(selectStateRepos)
+      this.isLoading$ = this.store.select(isLoading)
+      this.error$ = this.store.select(error)
   }
 }

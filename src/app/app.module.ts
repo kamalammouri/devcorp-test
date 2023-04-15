@@ -12,6 +12,8 @@ import { repoReducer } from './stores/reducers/repo.reducer';
 import { RepoEffects } from './stores/effects/repo.effects';
 import { FollowerReducer } from './stores/reducers/follower.reducer copy';
 import { FollowerEffects } from './stores/effects/follower.effects';
+import { stateRepoReducer } from './stores/reducers/state.reducer';
+import { StateRepoEffects } from './stores/effects/state.effects';
 @NgModule({
   declarations: [
     AppComponent
@@ -21,8 +23,8 @@ import { FollowerEffects } from './stores/effects/follower.effects';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    StoreModule.forRoot({'profile': profileReducer,'repo': repoReducer, 'follower':FollowerReducer}),
-    EffectsModule.forRoot([ProfileEffects,RepoEffects,FollowerEffects])
+    StoreModule.forRoot({'profile': profileReducer,'repo': repoReducer, 'follower':FollowerReducer , 'stateRepo' : stateRepoReducer}),
+    EffectsModule.forRoot([ProfileEffects,RepoEffects,FollowerEffects,StateRepoEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

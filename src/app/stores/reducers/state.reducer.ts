@@ -10,7 +10,7 @@ export const initialState: StateRepoState = {
 };
 
 
-export const repoReducer = createReducer(
+export const stateRepoReducer = createReducer(
   initialState,
   on(stateActions.fetchStateStart, (state) => ({ ...state, isLoading: true, error: undefined })),
   on(stateActions.fetchStateSuccess, (state, { response }) => ({ ...state,response : response , isLoading: false , error: undefined})),
