@@ -37,6 +37,7 @@ export class UserRepositoryStateComponent implements OnInit {
     filter((repoName) => repoName),
     distinctUntilChanged()
   );
+
   constructor(
     private userService: UsersService,
     private route: ActivatedRoute,
@@ -54,4 +55,5 @@ export class UserRepositoryStateComponent implements OnInit {
       this.isLoading$ = this.store.select(isLoading)
       this.error$ = this.store.select(error)
   }
+
 }

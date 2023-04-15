@@ -8,12 +8,14 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from 'src/app/stores/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from 'src/app/stores/effects/users.effects';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 
 @NgModule({
   declarations: [
     UsersListComponent,
-    HomeComponent
+    HomeComponent,
+    SearchBarComponent
   ],
   imports: [
     StoreModule.forFeature('user', reducers),
