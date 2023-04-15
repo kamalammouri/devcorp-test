@@ -9,6 +9,7 @@ import { reducers } from 'src/app/stores/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from 'src/app/stores/effects/users.effects';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { SharedModule } from '../shared/shared/shared.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     SearchBarComponent
   ],
   imports: [
+    SharedModule,
     StoreModule.forFeature('user', reducers),
     EffectsModule.forFeature([UsersEffects]),
     RouterModule.forChild(layoutRoutes),

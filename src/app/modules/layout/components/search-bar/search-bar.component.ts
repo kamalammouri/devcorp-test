@@ -16,7 +16,6 @@ export class SearchBarComponent implements OnInit {
     this.userService.login$.pipe(map(login => login ? login : '')).subscribe((login:string) => this.search$.next(login));
     this.search$.pipe(
       filter((search:any) => search),
-      distinctUntilChanged(),
       debounceTime(1000),
     ).subscribe(login => this.router.navigate(['/profile',login]));
   }

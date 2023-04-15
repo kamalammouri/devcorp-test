@@ -16,7 +16,7 @@ import { stateRepoReducer } from './stores/reducers/state.reducer';
 import { StateRepoEffects } from './stores/effects/state.effects';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     HttpClientModule,
