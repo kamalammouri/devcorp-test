@@ -2,7 +2,7 @@
   <pre>loading...</pre>
 </ng-container>
 <ng-container *ngIf="(error$ | async) as error">
-  <pre>error</pre>
+  <pre>{{error.message}}</pre>
 </ng-container>
 <ng-container *ngIf="followers$ | async as followers">
   <div class="container">

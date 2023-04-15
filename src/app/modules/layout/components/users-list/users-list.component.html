@@ -31,5 +31,5 @@
 </div>
 </ng-container>
 <ng-container *ngIf="(apiError$ | async) as error">
-  <pre>error</pre>
+  <pre>{{error.message}}</pre>
 </ng-container>

@@ -1,4 +1,4 @@
-import { distinctUntilChanged, filter, map, tap } from 'rxjs';
+import { distinctUntilChanged, filter, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -29,9 +29,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         map((params: any) => params.login),
         filter(login => login),
         distinctUntilChanged(),
-        tap(login => this.userService.login$.next(login))
+        tap(login => this.userService.login$.next(login)),
+        switchMap((login: string) => of(this.store.dispatch(fetchProfileStart({ login: login }))))
       )
-      .subscribe((login: string) => this.store.dispatch(fetchProfileStart({ login: login })));
+      .subscribe();
   }
 
   ngOnInit(): void {

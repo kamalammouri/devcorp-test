@@ -2,7 +2,8 @@
   <pre>loading...</pre>
 </ng-container>
 <ng-container *ngIf="(error$ | async) as error">
-  <pre>error</pre>
+  <pre>{{error.message}}</pre>
+
 </ng-container>
 <ng-container *ngIf="profile$ | async as profile">
 

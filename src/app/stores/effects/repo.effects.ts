@@ -12,9 +12,11 @@ export class RepoEffects {
   loadRepo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchRepoStart),
-      switchMap(({ login }) => this.usersService.getUserRepos(login)),
-      map((response:Irepo[]) => fetchRepoSuccess({ response })),
-      catchError((error) => of(fetchRepoError({ error })))
+      switchMap(({ login }) => this.usersService.getUserRepos(login)
+      .pipe(
+        map((response:Irepo[]) => fetchRepoSuccess({ response })),
+        catchError((error) => of(fetchRepoError({ error })))
+      ))
     )
   );
 }

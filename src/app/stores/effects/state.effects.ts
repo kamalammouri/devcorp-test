@@ -12,9 +12,12 @@ export class StateRepoEffects {
   loadStateRepo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchStateStart),
-      switchMap(({ login , repoName }) => this.usersService.getStateRepo(login,repoName)),
-      map((response:IstateRepo) => fetchStateSuccess({ response })),
-      catchError((error) => of(fetchStateError({ error })))
+      switchMap(({ login , repoName }) => this.usersService.getStateRepo(login,repoName)
+      .pipe(
+        map((response:IstateRepo) => fetchStateSuccess({ response })),
+        catchError((error) => of(fetchStateError({ error })))
+      )),
+
     )
   );
 }

@@ -12,9 +12,11 @@ export class FollowerEffects {
   loadRepo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchFollowerStart),
-      switchMap(({ login }) => this.usersService.getUserFollowers(login)),
-      map((response:Ifollower[]) => fetchFollowerSuccess({ response })),
-      catchError((error) => of(fetchFollowerError({ error })))
+      switchMap(({ login }) => this.usersService.getUserFollowers(login)
+      .pipe(
+        map((response:Ifollower[]) => fetchFollowerSuccess({ response })),
+        catchError((error) => of(fetchFollowerError({ error })))
+      ))
     )
   );
 }

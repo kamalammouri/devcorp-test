@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { switchMap, map, catchError, timeout } from 'rxjs/operators';
+import { switchMap, map, catchError, timeout, mergeMap, tap, exhaustMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import {
   fetchProfileError,
@@ -15,9 +15,11 @@ export class ProfileEffects {
   loadprofile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchProfileStart),
-      switchMap(({ login }) => this.usersService.getProfile(login)),
-      map((response) => fetchProfileSuccess({ response })),
-      catchError((error) => of(fetchProfileError({ error })))
+      switchMap(({ login }) => this.usersService.getProfile(login)
+      .pipe(
+        map((response) => fetchProfileSuccess({ response })),
+        catchError((error) => of(fetchProfileError({ error })))
+        )),
     )
   );
 }
