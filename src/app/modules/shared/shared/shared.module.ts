@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NoSpacesDirective } from 'src/app/directive/no-spaces.directive';
-
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -9,8 +9,9 @@ import { NoSpacesDirective } from 'src/app/directive/no-spaces.directive';
     NoSpacesDirective
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NgChartsModule
   ],
-  exports: [NoSpacesDirective]
+  exports: [NoSpacesDirective,NgChartsModule]
 })
 export class SharedModule { }

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { userRoutes } from './user-profile.routes';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { UserRepositoryStateComponent } from './components/user-repository-state/user-repository-state.component';
+import { SharedModule } from '../shared/shared/shared.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { UserRepositoryStateComponent } from './components/user-repository-state
     UserRepositoryStateComponent
   ],
   imports: [
+    SharedModule,
     RouterModule.forChild(userRoutes),
     CommonModule
   ]

@@ -7,21 +7,14 @@ import {
 } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import * as moment from 'moment';
-import { Chart } from 'chart.js/auto';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Observable,
-  catchError,
-  combineLatest,
   combineLatestWith,
-  concatMap,
   distinctUntilChanged,
   filter,
   forkJoin,
-  from,
   map,
-  mergeMap,
-  of,
   switchMap,
   tap,
 } from 'rxjs';
@@ -30,12 +23,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { fetchStateStart } from 'src/app/stores/actions/state.actions';
 import { error, isLoading, selectStateRepos } from 'src/app/stores/selectors/state.selector';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
+
 @Component({
   selector: 'app-user-repository-state',
   templateUrl: './user-repository-state.component.html',
   styleUrls: ['./user-repository-state.component.scss'],
 })
-export class UserRepositoryStateComponent implements OnInit {
+export class UserRepositoryStateComponent {
   stateRepos$!: Observable<any | undefined>;
   isLoading$!: Observable<boolean | undefined>;
   error$!: Observable<HttpErrorResponse | undefined>;
@@ -45,17 +40,23 @@ export class UserRepositoryStateComponent implements OnInit {
     distinctUntilChanged()
   );
 
-  commits = 0;
-  issues = 0;
-  pullRequests = 0;
-  @ViewChild('chart') chartRef!: ElementRef;
+  commits:any = undefined;
+  issues:any = undefined;
+  pulls :any= undefined;
+
+
+lineChartData:any = [];
+lineChartLabels:any = [];
+lineChartOptions: ChartOptions = {
+  responsive: true,
+};
+lineChartPlugins = [];
 
   constructor(
     private userService: UsersService,
     private route: ActivatedRoute,
     private store: Store
   ) {
-    console.log('UserRepositoryStateComponent constru');
     this.isLoading$ = this.store.select(isLoading);
     this.error$ = this.store.select(error);
 
@@ -85,17 +86,39 @@ export class UserRepositoryStateComponent implements OnInit {
             pulls
           })))
       }),
-
-
+      tap(e => {
+        this.commits = e.commits.data;
+        this.issues = e.issues.data;
+        this.pulls = e.pulls.data;
+        this.updateChartData(this.commits, this.issues, this.pulls);
+      })
     );
-
-
   }
 
-  ngOnInit(): void {
 
-    console.log('UserRepositoryStateComponent init');
+  private updateChartData(commits: any[], issues: any[], pulls: any[]): void {
+    const groupedCommits = this.groupByDate(commits,'commit');
+    const groupedIssues = this.groupByDate(issues);
+    const groupedPulls = this.groupByDate(pulls);
 
+    const allDates = Array.from(new Set([...Object.keys(groupedCommits), ...Object.keys(groupedIssues), ...Object.keys(groupedPulls)])).sort();
+    //return console.log('groupedCommits',groupedCommits,'groupedIssues',groupedIssues,'groupedPulls',groupedPulls)
+    this.lineChartLabels = allDates;
+    this.lineChartData = [
+      { data: allDates.map(date => groupedCommits[date] || 0), label: 'Commits' },
+      { data: allDates.map(date => groupedIssues[date] || 0), label: 'Issues' },
+      { data: allDates.map(date => groupedPulls[date] || 0), label: 'Pulls' },
+    ];
   }
+
+  private groupByDate(items: any[],type:string='any'): { [key: string]: number } {
+    return items?.reduce((acc, item) => {
+      const createdAt = (type === 'commit') ? moment(item.commit.author.date).format('YYYY-MM-DD') : moment(item.created_at).format('YYYY-MM-DD');
+      acc[createdAt] = (acc[createdAt] || 0) + 1;
+      return acc;
+    }, {});
+  }
+
+
 
 }
