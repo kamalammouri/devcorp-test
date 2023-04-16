@@ -11,14 +11,18 @@ import { Chart } from 'chart.js/auto';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Observable,
+  catchError,
   combineLatest,
   combineLatestWith,
+  concatMap,
   distinctUntilChanged,
   filter,
   forkJoin,
+  from,
   map,
   mergeMap,
   of,
+  switchMap,
   tap,
 } from 'rxjs';
 import { IstateRepo } from 'src/app/models/state-repo.model';
@@ -50,17 +54,48 @@ export class UserRepositoryStateComponent implements OnInit {
     private userService: UsersService,
     private route: ActivatedRoute,
     private store: Store
-  ) {}
-  ngOnInit(): void {
-    this.userService.login$
-      .pipe(combineLatestWith(this.repoName$))
-      .subscribe(([login, repoName]) => {
-        this.store.dispatch(fetchStateStart({ login: login, repoName: repoName }));
-      });
+  ) {
+    console.log('UserRepositoryStateComponent constru');
+    this.isLoading$ = this.store.select(isLoading);
+    this.error$ = this.store.select(error);
 
-      this.stateRepos$ = this.store.select(selectStateRepos)
-      this.isLoading$ = this.store.select(isLoading)
-      this.error$ = this.store.select(error)
+    this.userService.login$
+    .pipe(
+      combineLatestWith(this.repoName$),
+      filter(([login, repoName]) => login && repoName),
+      distinctUntilChanged()
+      )
+    .subscribe(([login, repoName]) => {
+      this.store.dispatch(fetchStateStart({ login: login, repoName: repoName }));
+    });
+
+    this.stateRepos$ = this.store.select(selectStateRepos).pipe(
+      filter((state:any) => state),
+      distinctUntilChanged(),
+      switchMap((state:IstateRepo) => {
+        const commits$ = this.userService.getStateFromUrl(state?.commits_url.replace('{/sha}',''));
+        const issues$ = this.userService.getStateFromUrl(state?.issues_url.replace('{/number}',''));
+        const pulls$ = this.userService.getStateFromUrl(state?.pulls_url.replace('{/number}',''));
+
+        return forkJoin([commits$, issues$, pulls$]).pipe(
+          map(([commits, issues, pulls]) => ({
+            name: state?.name,
+            commits,
+            issues,
+            pulls
+          })))
+      }),
+
+
+    );
+
+
+  }
+
+  ngOnInit(): void {
+
+    console.log('UserRepositoryStateComponent init');
+
   }
 
 }

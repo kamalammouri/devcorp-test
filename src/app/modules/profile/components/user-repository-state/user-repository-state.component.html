@@ -11,9 +11,9 @@
     <div class="d-flex">
       <h5>{{ stateRepos.name }}</h5>
       <ul>
-        <li>Commits: {{ commits }}</li>
-        <li>Issues: {{ issues }}</li>
-        <li>Pull Requests: {{ pullRequests }}</li>
+        <li>Commits: {{ stateRepos.commits.count }}</li>
+        <li>Issues: {{ stateRepos.issues.count }}</li>
+        <li>Pull Requests: {{ stateRepos.pulls.count }}</li>
       </ul>
     </div>
 </div>
